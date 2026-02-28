@@ -17,10 +17,17 @@ export default function RegisterPage() {
     setLoading(true);
 
     try {
-      await register({ email, password, name: name || undefined });
+      await register({ email, password, name: name || undefined, emails: [] });
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.');
+      const errorDetail = err.response?.data?.detail;
+      if (Array.isArray(errorDetail)) {
+        setError(errorDetail.map((e: any) => e.msg).join(', '));
+      } else if (typeof errorDetail === 'object') {
+        setError(JSON.stringify(errorDetail));
+      } else {
+        setError(errorDetail || 'Registration failed. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

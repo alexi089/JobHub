@@ -51,6 +51,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   name?: string;
+  emails?: string[];
 }
 
 export interface AuthResponse {
