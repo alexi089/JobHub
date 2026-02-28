@@ -64,3 +64,18 @@ export interface SyncResponse {
   applications_synced: number;
   message: string;
 }
+
+export interface Interview {
+  id: string;
+  application_id: string;
+  user_id: string;
+  interview_date: string;
+  interview_type: string | null;
+  location: string | null;
+  notes: string | null;
+  status: 'scheduled' | 'completed' | 'cancelled';
+  created_at: string;
+  updated_at: string;
+  company_name?: string;
+  job_title?: string;
+}

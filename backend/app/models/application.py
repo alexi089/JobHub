@@ -39,6 +39,12 @@ class Application(Base):
         cascade="all, delete-orphan",
         order_by="ApplicationUpdate.created_at.desc()"
     )
+    interviews = relationship(
+        "Interview",
+        back_populates="application",
+        cascade="all, delete-orphan",
+        order_by="Interview.interview_date.asc()"
+    )
     
     def __repr__(self):
         return f"<Application {self.job_title} at {self.company_name}>"

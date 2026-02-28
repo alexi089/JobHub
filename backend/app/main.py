@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import engine, Base
-from app.api import auth, applications, ats
+from app.api import auth, applications, ats, interviews
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -42,6 +42,7 @@ async def add_security_headers(request, call_next):
 app.include_router(auth.router, prefix="/api")
 app.include_router(applications.router, prefix="/api")
 app.include_router(ats.router)
+app.include_router(interviews.router)
 
 
 @app.get("/")

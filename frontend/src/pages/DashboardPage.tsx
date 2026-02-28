@@ -1,12 +1,15 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { applicationsApi, atsApi } from '../api/client';
 import { useAuth } from '../hooks/useAuth';
 import type { ATSAccount } from '../types';
+import logo from '../assets/logo.png';
+import InterviewCalendar from '../components/InterviewCalendar';
 
 export default function DashboardPage() {
   const { user, logout } = useAuth();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: applications, isLoading: appsLoading } = useQuery({
     queryKey: ['applications'],
@@ -44,12 +47,14 @@ export default function DashboardPage() {
     <div className="container">
       <div className="header">
         <div>
-          <h1>Applications Dashboard</h1>
-          <p className="subtitle">Welcome back, {user?.name || user?.email}</p>
+          <img src={logo} alt="JobHub" style={{ height: '120px', width: 'auto' }} />
         </div>
         <div className="header-actions">
+          <Link to="/applications/add">
+            <button className="btn btn-primary">+ Add Application</button>
+          </Link>
           <Link to="/ats/connect">
-            <button className="btn btn-primary">+ Connect ATS</button>
+            <button className="btn btn-secondary">Connect ATS</button>
           </Link>
           <button onClick={logout} className="btn btn-secondary">Logout</button>
         </div>
@@ -87,18 +92,6 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Empty State - No ATS Connected */}
-      {!atsLoading && (!atsAccounts || atsAccounts.length === 0) && (
-        <div className="empty-state">
-          <div className="empty-icon">🔗</div>
-          <h2>Connect Your ATS</h2>
-          <p>Sync applications from Greenhouse, Workday, and more</p>
-          <Link to="/ats/connect">
-            <button className="btn btn-primary">Connect Greenhouse</button>
-          </Link>
-        </div>
-      )}
-
       {/* Applications Table */}
       {applications && applications.length > 0 && (
         <div className="card">
@@ -116,7 +109,11 @@ export default function DashboardPage() {
               </thead>
               <tbody>
                 {applications.map((app) => (
-                  <tr key={app.id}>
+                  <tr
+                    key={app.id}
+                    onClick={() => navigate(`/applications/${app.id}`)}
+                    style={{ cursor: 'pointer' }}
+                  >
                     <td className="bold">{app.company_name}</td>
                     <td>{app.job_title}</td>
                     <td>
@@ -144,6 +141,9 @@ export default function DashboardPage() {
       )}
 
       {appsLoading && <div className="loading">Loading applications...</div>}
+
+      {/* Interview Calendar */}
+      <InterviewCalendar />
     </div>
   );
 }
