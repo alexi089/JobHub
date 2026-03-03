@@ -47,8 +47,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (data: RegisterRequest) => {
     const userData = await authApi.register(data);
-    // Small delay to ensure DB transaction commits
-    await new Promise(resolve => setTimeout(resolve, 100));
     // After registration, log them in
     await login({ email: data.email, password: data.password });
   };

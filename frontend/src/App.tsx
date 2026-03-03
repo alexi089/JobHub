@@ -5,8 +5,6 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import ConnectGreenhousePage from './pages/ConnectGreenhousePage';
-import AddApplicationPage from './pages/AddApplicationPage';
-import EditApplicationPage from './pages/EditApplicationPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -78,22 +76,6 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <ConnectGreenhousePage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/applications/add"
-        element={
-          <ProtectedRoute>
-            <AddApplicationPage />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/applications/:id"
-        element={
-          <ProtectedRoute>
-            <EditApplicationPage />
           </ProtectedRoute>
         }
       />

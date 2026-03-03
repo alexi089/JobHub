@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { atsApi } from '../api/client';
-import logo from '../assets/logo.png';
 
 export default function ConnectGreenhousePage() {
   const [apiKey, setApiKey] = useState('');
@@ -30,16 +29,9 @@ export default function ConnectGreenhousePage() {
 
   return (
     <div className="container">
-      <div className="card" style={{ maxWidth: '600px', margin: '50px auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
-          <Link to="/dashboard" style={{ color: 'var(--primary)', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>
-            ← Back to Dashboard
-          </Link>
-          <img src={logo} alt="JobHub" style={{ height: '120px', width: 'auto' }} />
-        </div>
-
-        <h1 style={{ fontSize: '28px', marginBottom: '8px' }}>Connect Greenhouse</h1>
-        <p className="subtitle" style={{ marginBottom: '24px' }}>Sync your job applications automatically</p>
+      <div className="card" style={{ maxWidth: '600px', margin: '60px auto' }}>
+        <h1>Connect Greenhouse</h1>
+        <p className="subtitle">Sync your job applications automatically</p>
 
         {error && <div className="error-box">{error}</div>}
 
