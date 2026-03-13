@@ -31,11 +31,6 @@ class User(Base):
         back_populates="user",
         cascade="all, delete-orphan"
     )
-    interviews = relationship(
-        "Interview",
-        back_populates="user",
-        cascade="all, delete-orphan"
-    )
     
     def __repr__(self):
         return f"<User {self.email}>"

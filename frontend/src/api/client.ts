@@ -6,7 +6,6 @@ import type {
   User,
   Application,
   ApplicationWithUpdates,
-  Interview,
 } from '../types';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
@@ -56,33 +55,6 @@ export const applicationsApi = {
     const response = await api.get<ApplicationWithUpdates>(`/api/applications/${id}`);
     return response.data;
   },
-
-  create: async (data: {
-    job_title: string;
-    company_name: string;
-    status?: string;
-    applied_at: string;
-    job_url?: string;
-    notes?: string;
-  }): Promise<Application> => {
-    const response = await api.post<Application>('/api/applications', data);
-    return response.data;
-  },
-
-  update: async (id: string, data: {
-    job_title?: string;
-    company_name?: string;
-    status?: string;
-    job_url?: string;
-    notes?: string;
-  }): Promise<Application> => {
-    const response = await api.patch<Application>(`/api/applications/${id}`, data);
-    return response.data;
-  },
-
-  delete: async (id: string): Promise<void> => {
-    await api.delete(`/api/applications/${id}`);
-  },
 };
 
 // ATS API
@@ -104,45 +76,6 @@ export const atsApi = {
 
   disconnect: async (accountId: string) => {
     await api.delete(`/api/ats/accounts/${accountId}`);
-  },
-};
-
-// Interviews API
-export const interviewsApi = {
-  list: async (upcomingOnly: boolean = false): Promise<Interview[]> => {
-    const response = await api.get<Interview[]>(`/api/interviews${upcomingOnly ? '?upcoming_only=true' : ''}`);
-    return response.data;
-  },
-
-  get: async (id: string): Promise<Interview> => {
-    const response = await api.get<Interview>(`/api/interviews/${id}`);
-    return response.data;
-  },
-
-  create: async (data: {
-    application_id: string;
-    interview_date: string;
-    interview_type?: string;
-    location?: string;
-    notes?: string;
-  }): Promise<Interview> => {
-    const response = await api.post<Interview>('/api/interviews', data);
-    return response.data;
-  },
-
-  update: async (id: string, data: {
-    interview_date?: string;
-    interview_type?: string;
-    location?: string;
-    notes?: string;
-    status?: string;
-  }): Promise<Interview> => {
-    const response = await api.patch<Interview>(`/api/interviews/${id}`, data);
-    return response.data;
-  },
-
-  delete: async (id: string): Promise<void> => {
-    await api.delete(`/api/interviews/${id}`);
   },
 };
 
